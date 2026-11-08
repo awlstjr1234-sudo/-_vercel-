@@ -1,0 +1,109 @@
+@import 'tailwindcss';
+
+/*
+ * 디자인 토큰(라이트/다크).
+ * 색은 CSS 변수로 두고 아래 @theme에서 Tailwind 색 이름(bg-surface, text-ink-muted 등)으로 연결합니다.
+ * 다크 모드는 OS 설정(prefers-color-scheme)을 따르고, <html data-theme="light">이면 라이트로 고정됩니다.
+ */
+:root {
+  color-scheme: light;
+  --bg: #f3eee1;
+  --surface: #fffdf8;
+  --surface-2: #eae2cf;
+  --ink: #1e1b16;
+  --ink-muted: #6b6155;
+  --border: #d9cca9;
+  --accent: #b23327;
+  --accent-contrast: #fffdf8;
+  --gold: #a97c2f;
+  --navy: #26304a;
+  --navy-contrast: #f3eee1;
+  --el-wood: #3f6b3a;
+  --el-fire: #b23327;
+  --el-earth: #a97c2f;
+  --el-metal: #756b58;
+  --el-water: #2b4c6f;
+  --shadow: 0 1px 0 rgba(30, 27, 22, 0.06), 0 8px 24px -12px rgba(30, 27, 22, 0.28);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+    --bg: #17151a;
+    --surface: #201d24;
+    --surface-2: #2b2730;
+    --ink: #ede6d6;
+    --ink-muted: #a79c8a;
+    --border: #3a3540;
+    --accent: #e2695a;
+    --accent-contrast: #17151a;
+    --gold: #d9a855;
+    --navy: #c9cfe0;
+    --navy-contrast: #17151a;
+    --el-wood: #7fbe79;
+    --el-fire: #e2695a;
+    --el-earth: #d9a855;
+    --el-metal: #c7bfae;
+    --el-water: #7fadd1;
+    --shadow: 0 1px 0 rgba(0, 0, 0, 0.4), 0 12px 30px -14px rgba(0, 0, 0, 0.6);
+  }
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-border: var(--border);
+  --color-accent: var(--accent);
+  --color-accent-contrast: var(--accent-contrast);
+  --color-gold: var(--gold);
+  --color-navy: var(--navy);
+  --color-navy-contrast: var(--navy-contrast);
+  --color-el-wood: var(--el-wood);
+  --color-el-fire: var(--el-fire);
+  --color-el-earth: var(--el-earth);
+  --color-el-metal: var(--el-metal);
+  --color-el-water: var(--el-water);
+  --shadow-card: var(--shadow);
+}
+
+@theme {
+  --font-sans: 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+  --font-serif: 'Song Myung', 'Noto Serif KR', serif;
+
+  /* 괘돌이가 살짝 위아래로 움직이는 애니메이션 (말하는 중엔 빠르게) */
+  --animate-bob: guide-bob 3s ease-in-out infinite;
+  --animate-bob-fast: guide-bob 1.2s ease-in-out infinite;
+  @keyframes guide-bob {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-3px);
+    }
+  }
+}
+
+@layer base {
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    text-wrap: balance;
+  }
+
+  /* Preflight가 없애는 날짜 입력칸 내부 여백을 브라우저 기본값으로 되돌려, 다른 입력칸과 높이를 맞춥니다. */
+  ::-webkit-datetime-edit {
+    padding-block: 1px;
+  }
+}
+
+/* 타로 카드 뒷면 무늬 (빗살 + 그라데이션) */
+@utility tarot-card-back {
+  background:
+    repeating-linear-gradient(45deg, transparent 0 8px, rgba(217, 168, 85, 0.13) 8px 16px),
+    linear-gradient(145deg, var(--navy), var(--surface-2));
+}
